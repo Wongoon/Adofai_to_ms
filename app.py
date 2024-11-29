@@ -46,7 +46,8 @@ def angle_to_ms(rbpms):
 
 def create_full_xml(msList, bpm_list):
     root = ET.Element("root")
-
+    offset = ET.SubElement(root, "offset")
+    offset.set("tick", str(data["settings"]["offset"]))
     bpm_parent = ET.SubElement(root, "bpm")
     for bpm_info in bpm_list:
         bpm = ET.SubElement(bpm_parent, "bpm")
@@ -56,6 +57,7 @@ def create_full_xml(msList, bpm_list):
     note_list_parent = ET.SubElement(root, "note_list")
     for idx, ms in enumerate(msList):
         note = ET.SubElement(note_list_parent, "note")
+        note.set("idx", str(idx + 1))
         note.set("tick", f"{ms:.2f}")
         note.set("line", "1")
 
